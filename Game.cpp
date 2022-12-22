@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <ctime>
-#include <random>
+#include <time.h>
+#include <stdlib.h>
 
 using std::cout;
 using std::endl;
@@ -193,10 +193,10 @@ struct Deck
 
         for (int i = size - 1; i > 0; i--)
         {
-            int rand = random() %(i+1);
+            int r = rand() %(i+1);
             Card temp = deck[i];
-            deck[i] = deck[rand];
-            deck[rand] = temp;
+            deck[i] = deck[r];
+            deck[r] = temp;
         }
         cardsUsed = 0;
     }
