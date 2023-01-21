@@ -1,30 +1,37 @@
-#include <iostream>
 #include "card.hpp"
 #include "deck.hpp"
 #include "player.hpp"
-
-using namespace std;
-
 int play(Deck *deck)
 {
+    // The current card, which the user sees.
     Card currentCard;
+    // The next card in the deck.  The user tries
+    //    to predict whether this is higher or lower
+    //    than the current card.
     Card nextCard;
+    // The number of correct predictions the
+    //   user has made.  At the end of the game,
+    //   this will be the user's score.
     int correctGuesses;
+    // The user's guess.  'H' if the user predicts that
+    //   the next card will be higher, 'L' if the user
+    //   predicts that it will be lower.
     char guess;
+    // Shuffle the deck into a random order before
+    //    starting the game.
+    // deck->shuffle(); 
 
     correctGuesses = 0;
     currentCard = deck->dealCard();
-
     cout << "The first card is the " << currentCard.toString() << endl;
 
     while (true)
-    {
+    { 
         // Loop ends when user's prediction is wrong.
 
         /* Get the user's prediction, 'H' or 'L' (or 'h' or 'l'). */
 
-        cout << "Will the next card be higher (H) or lower (L)?: ";
-        ;
+       cout << "Will the next card be higher (H) or lower (L)?: ";;
         do
         {
             cin >> guess;
@@ -71,35 +78,41 @@ int play(Deck *deck)
             }
         }
 
+        /* To set up for the next iteration of the loop, the nextCard
+           becomes the currentCard, since the currentCard has to be
+           the card that the user sees, and the nextCard will be
+           set to the next card in the deck after the user makes
+           his prediction.  */
+
         currentCard = nextCard;
         cout << endl
              << "The card is " + currentCard.toString() << endl;
 
     } // end of while loop
 
-    cout << endl
-         << "The game is over." << endl;
-    cout << "You made " << correctGuesses << " correct predictions." << endl;
+    cout << endl <<"The game is over." << endl;
+    cout << "You made "<< correctGuesses << " correct predictions." << endl;
     cout << endl;
-
+    
     return correctGuesses;
 }
 
+
 /// @brief MAIN METHOD
-/// @param argc
-/// @param argv
-/// @return
+/// @param argc 
+/// @param argv 
+/// @return 
 int main(int argc, char const *argv[])
 {
     cout << "Welcome to a simple Card Game Dabbed [High ~ Low]."
-         << "A card is dealt from a deck of cards. You have to predict "
-         << "whether the next card will be higher or lower. Your score in the game is the "
+         << "A card is dealt from a deck of cards.\nYou have to predict"
+         << "whether the next card will be higher or lower.\nYour score in the game is the "
          << "number of correct predictions you make before you guess wrong."
          << "\n\nYour Turn is now!\n"
          << endl;
-
-    // Initialize deck class
-    // Deck has jokers
+    // Get a new deck of cards, and
+    //   store a reference to it in
+    //   the variable, deck.
     Deck *deck = new Deck(false);
 
     // Number of games user has played.
@@ -110,6 +123,9 @@ int main(int argc, char const *argv[])
     // Average score, computed by dividing
     //      sumOfScores by gamesPlayed.
     double averageScore;
+    // Record user's response when user is
+    //   asked whether he wants to play
+    //   another game.
     char playAgain;
     int scoreThisGame;
     int i;
@@ -117,17 +133,18 @@ int main(int argc, char const *argv[])
     cout << "Enter the number of players: ";
     cin >> numPLayers;
 
-    // Players array. Holds list of players
-    Player *players = nullptr;
-
+    Player *players;
+    
+    //initialize number of players
     players = new Player[numPLayers];
     string name;
     for (i = 0; i < numPLayers; i++)
     {
         cout << "Enter the player [" << i + 1 << "] name: ";
-        cin >> name;
+        cin>> name;
         players[i] = Player(name);
     }
+    
 
     do
     {
@@ -143,7 +160,7 @@ int main(int argc, char const *argv[])
         }
         gamesPlayed++;
 
-        cout << "Play again(Y/N)? ";
+        cout<<"Play again(Y/N)? ";
         cin >> playAgain;
         playAgain = toupper(playAgain);
 
@@ -164,7 +181,7 @@ int main(int argc, char const *argv[])
     }
 
     delete deck;
-    delete[] players;
+    delete players;
 
     return 0;
 }

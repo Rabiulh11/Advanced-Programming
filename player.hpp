@@ -1,6 +1,5 @@
 #pragma once
-#include <string>
-
+#include<string>
 using std::string;
 
 class Player
@@ -9,7 +8,6 @@ private:
     int wins;
     int loses;
     string name;
-
 public:
     Player();
     Player(string name);

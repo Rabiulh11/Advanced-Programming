@@ -1,14 +1,25 @@
 #pragma once
 #include "card.hpp"
 
-/// @brief Deck represents a deck of playing cards.
+/**
+ * @brief Deck represents a deck of playing cards.  The deck
+ *  is a regular poker deck that contains 52 regular cards and that can
+ *  also optionally include two Jokers.
+ *
+ */
 struct Deck
 {
-    // Array of cards
+    /// @brief Array of cards
     Card *deck;
+    /**
+     * Keeps track of the number of cards that have been dealt from
+     * the deck so far.
+     */
+    int cardsUsed;
+    /**
+     * Keeps track of the deck size
+     */
     int size;
-
-    /// @brief Shuffles the cards in the deck
     void shuffle()
     {
         // activates the generator
@@ -21,24 +32,44 @@ struct Deck
             deck[i] = deck[rand];
             deck[rand] = temp;
         }
+        cardsUsed = 0;
     }
 
-    /// @brief Simulates dealing a card
-    /// @return Dealt card
     Card dealCard()
     {
+        // NOTE:  Cards are not literally removed from the array
+        // that represents the deck. We keep track of how many cards
         return deck[random() % 10];
     }
 
-    /// @brief Test whether the deck contains Jokers.
-    /// @return true/false
+    /**
+     * @brief Test whether the deck contains Jokers.
+     *
+     * @return true
+     * @return false
+     */
     bool hasJokers()
     {
         return (size == 54);
     }
 
-    /// @brief Constructor to initialize the deck
-    /// @param noJokers - marker of whether the deck has jokers
+    /**
+     * As cards are dealt from the deck, the number of cards left
+     * decreases.  This function returns the number of cards that
+     * are still left in the deck.  The return value would be
+     * 52 or 54 (depending on whether the deck includes Jokers)
+     * when the deck is first created or after the deck has been
+     * shuffled.  It decreases by 1 each time the dealCard() method
+     * is called.
+     */
+    int cardsLeft()
+    {
+        return size - cardsUsed;
+    }
+    /**
+     * Put all the used cards back into the deck (if any), and
+     * shuffle the deck into a random order.
+     */
     Deck(bool noJokers)
     {
         if (noJokers)
@@ -66,5 +97,6 @@ struct Deck
             deck[52] = Card(1, Card::JOKER);
             deck[53] = Card(2, Card::JOKER);
         }
+        cardsUsed = 0;
     }
 };
