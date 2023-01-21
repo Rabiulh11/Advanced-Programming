@@ -1,60 +1,28 @@
 #pragma once
-#include <iostream>
 #include <string>
-#include <ctime>
-#include <random>
 
-using std::cin;
-using std::cout;
-using std::endl;
 using std::string;
 
-/**
- * @brief An object of type Card represents a playing card from a
- * standard Poker deck, including Jokers.  The card has a suit, which
- * can be spades, hearts, diamonds, clubs, or joker.  A spade, heart,
- * diamond, or club has one of the 13 values: ace, 2, 3, 4, 5, 6, 7,
- * 8, 9, 10, jack, queen, or king.  Note that "ace" is considered to be
- * the smallest value.  A joker can also have an associated value;
- * this value can be anything and can be used to keep track of several
- * different jokers.
- *
- */
+/// @brief An object of type Card represents a playing card from a standard Poker deck
 struct Card
 {
-    private:
-    /**
-     * This card's suit, one of the constants SPADES, HEARTS, DIAMONDS,
-     * CLUBS, or JOKER.  The suit cannot be changed after the card is
-     * constructed.
-     */
+private:
     int suit;
-
-    /**
-     * The card's value.  For a normal card, this is one of the values
-     * 1 through 13, with 1 representing ACE.  For a JOKER, the value
-     * can be anything.  The value cannot be changed after the card
-     * is constructed.
-     */
     int value;
 
 public:
-    static const int SPADES = 0; // Codes for the 4 suits, plus Joker.
+    static const int SPADES = 0;
     static const int HEARTS = 1;
     static const int DIAMONDS = 2;
     static const int CLUBS = 3;
     static const int JOKER = 4;
-    static const int ACE = 1;    // Codes for the non-numeric cards.
-    static const int JACK = 11;  //   Cards 2 through 10 have their
-    static const int QUEEN = 12; //   numerical values for their codes.
+    static const int ACE = 1;
+    static const int JACK = 11;
+    static const int QUEEN = 12;
     static const int KING = 13;
-    /**
-     * @brief Get the Suit As String object.
-     * Returns a String representation of the card's suit.
-     *
-     * @return string which is one of the numbers 1 through 13, inclusive for
-     * a regular card, and which can be any value for a Joker.
-     */
+
+    /// @brief Get the Suit As String object.
+    /// @return a String representation of the card's suit.
     string getSuitAsString()
     {
         switch (suit)
@@ -71,13 +39,8 @@ public:
             return "Joker";
         }
     }
-    /**
-     * @brief Get the Value As String object. A representation of the card's value.
-     *
-     * @return string  regular card, one of the strings "Ace", "2",
-     * "3", ..., "10", "Jack", "Queen", or "King".  For a Joker, the
-     * string is always numerical.
-     */
+    /// @brief  Get the Value As String object.
+    /// @return A representation of the card's value.
     string getValueAsString()
     {
         if (this->suit == this->JOKER)
@@ -115,15 +78,9 @@ public:
             }
         }
     }
-    /**
-     * @brief Returns a string representation of this card, including both
-     * its suit and its value (except that for a Joker with value 1,
-     * the return value is just "Joker").  Sample return values
-     * are: "Queen of Hearts", "10 of Diamonds", "Ace of Spades",
-     * "Joker", "Joker #2"
-     *
-     * @return string string representation of this card
-     */
+
+    /// @brief Returns a string representation of this card
+    /// @return string
     string toString()
     {
         if (this->suit == this->JOKER)
@@ -143,25 +100,18 @@ public:
         this->suit = JOKER;
         this->value = 1;
     }
-    /**
-     * @brief Construct a new Card object. Creates a card with a specified suit and value.
-     * @param val the value of the new card.  For a regular card (non-joker),
-     * the value must be in the range 1 through 13, with 1 representing an Ace.
-     * You can use the constants Card.ACE, Card.JACK, Card.QUEEN, and Card.KING.
-     * For a Joker, the value can be anything.
-     * @param sut  the suit of the new card.  This must be one of the values
-     * Card.SPADES, Card.HEARTS, Card.DIAMONDS, Card.CLUBS, or Card.JOKER.
-     */
+
+    /// @brief Construct a new Card object. Creates a card with a specified suit and value.
+    /// @param val card value
+    /// @param sut card suit
     Card(int val, int sut)
     {
         if (sut != this->SPADES && sut != this->HEARTS && sut != this->DIAMONDS && sut != this->CLUBS && sut != this->JOKER)
         {
-            cout << "Illegal playing card suit" << endl;
             return;
         }
         if (sut != this->JOKER && (val < 1 || val > 13))
         {
-            cout << "Illegal playing card value" << endl;
             return;
         }
         this->value = val;
